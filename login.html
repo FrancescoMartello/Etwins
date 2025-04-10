@@ -15,25 +15,28 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
+            background: linear-gradient(145deg, #a2c2e2, #c6e2f1);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background-attachment: fixed;
+            overflow: hidden;
         }
 
         .login-container {
-            background: linear-gradient(145deg, #6e7dff, #4e5cd4);
+            background: rgba(255, 255, 255, 0.9);
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 400px;
             text-align: center;
+            position: relative;
         }
 
         .login-container h2 {
-            color: #fff;
+            color: #333;
             font-size: 30px;
             margin-bottom: 25px;
             font-weight: 700;
@@ -84,12 +87,20 @@
             color: #4e5cd4;
         }
 
-        .login-container .eye-icon {
+        .eye-icon {
             position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
+            width: 24px;
+            height: 24px;
+            transition: 0.3s;
+        }
+
+        /* Hover effect for the eye icon */
+        .eye-icon:hover {
+            transform: translateY(-50%) scale(1.1);
         }
 
         /* Media Query for smaller devices */
@@ -102,7 +113,6 @@
                 font-size: 24px;
             }
         }
-
     </style>
     <script>
         // Funzione di login
