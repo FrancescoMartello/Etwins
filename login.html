@@ -8,11 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
     <script>
         // Inizializza Supabase con le credenziali del tuo progetto
-        const supabaseUrl = 'https://czjmamdgwrkldnfssabj.supabase.co';  // Sostituisci con il tuo URL Supabase
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6am1hbWRnd3JrbGRuZnNzYWJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyODA3NjQsImV4cCI6MjA1OTg1Njc2NH0.vLQ3Frkf9SfgNK6CRRbWw7b74X409Ewg3CrUE7QA8BM';     // Sostituisci con la tua API Key Supabase
+        const supabaseUrl = 'https://YOUR-SUPABASE-URL';  // Sostituisci con il tuo URL Supabase
+        const supabaseKey = 'YOUR-SUPABASE-API-KEY';     // Sostituisci con la tua API Key Supabase
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Funzione per gestire il login
+        // Funzione per gestire il login con email e password
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -34,6 +34,20 @@
                 alert('Errore durante il login: ' + err.message);
             }
         }
+
+        // Funzione per gestire il login con Google
+        async function loginWithGoogle() {
+            const { user, error } = await supabase.auth.signIn({
+                provider: 'google'
+            });
+
+            if (error) {
+                alert(error.message); // Mostra un messaggio di errore
+            } else {
+                // Se il login con Google ha successo, reindirizza alla dashboard
+                window.location.href = 'dashboard.html';
+            }
+        }
     </script>
 </head>
 <body>
@@ -43,5 +57,7 @@
         <input type="password" id="password" placeholder="Password" required><br><br>
         <button type="submit">Login</button>
     </form>
+    <br>
+    <button onclick="loginWithGoogle()">Login with Google</button>
 </body>
 </html>
