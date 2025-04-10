@@ -72,6 +72,15 @@
             margin-top: 10px;
         }
 
+        /* Stile per l'icona dell'occhio */
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
     </style>
     <script>
         // Funzione di login
@@ -88,6 +97,21 @@
                 alert("Credenziali errate! Per favore, riprova.");
             }
         }
+
+        // Funzione per mostrare/nascondere la password
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            // Controlla se la password è nascosta o visibile
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.src = "https://img.icons8.com/ios/452/visible.png";  // Cambia l'icona in visibile
+            } else {
+                passwordField.type = "password";
+                eyeIcon.src = "https://img.icons8.com/ios/452/invisible.png";  // Cambia l'icona in invisibile
+            }
+        }
     </script>
 </head>
 <body>
@@ -96,8 +120,11 @@
         <form onsubmit="event.preventDefault(); login();">
             <!-- Campo per Username -->
             <input type="text" id="username" placeholder="Username" required><br><br>
-            <!-- Campo per Password -->
-            <input type="password" id="password" placeholder="Password" required><br><br>
+            <!-- Campo per Password con icona dell'occhio -->
+            <div style="position: relative;">
+                <input type="password" id="password" placeholder="Password" required><br><br>
+                <img id="eyeIcon" class="eye-icon" src="https://img.icons8.com/ios/452/invisible.png" alt="eye icon" onclick="togglePassword()" />
+            </div>
             <!-- Bottone Login -->
             <button type="submit">Login</button>
         </form>
