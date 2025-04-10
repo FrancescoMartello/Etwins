@@ -1,44 +1,47 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Piattaforma ESP32</title>
-  <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    .login-container { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 300px; }
-    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 4px; border: 1px solid #ccc; }
-    button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background-color: #0056b3; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Include Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
+    <script>
+        // Inizializza Supabase con le credenziali del tuo progetto
+        const supabaseUrl = 'https://czjmamdgwrkldnfssabj.supabase.co';  // Sostituisci con il tuo URL Supabase
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6am1hbWRnd3JrbGRuZnNzYWJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyODA3NjQsImV4cCI6MjA1OTg1Njc2NH0.vLQ3Frkf9SfgNK6CRRbWw7b74X409Ewg3CrUE7QA8BM';     // Sostituisci con la tua API Key Supabase
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Funzione per gestire il login
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Esegui il login con email e password
+                const { user, error } = await supabase.auth.signIn({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    alert(error.message); // Mostra un messaggio di errore
+                } else {
+                    // Se il login ha successo, reindirizza alla dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (err) {
+                alert('Errore durante il login: ' + err.message);
+            }
+        }
+    </script>
 </head>
 <body>
-  <div class="login-container">
     <h2>Login</h2>
-    <input type="text" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Accedi</button>
-    <p id="error" style="color:red;"></p>
-  </div>
-
-  <script src="https://cdn.supabase.io/supabase-js@1.0.0/dist/supabase.js"></script>
-  <script>
-    const supabaseUrl = 'https://xyzcompany.supabase.co'; // Sostituisci con il tuo URL
-    const supabaseKey = 'public-anon-key'; // Sostituisci con la tua chiave pubblica
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-    async function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const { user, error } = await supabase.auth.signIn({ email, password });
-
-      if (error) {
-        document.getElementById('error').innerText = error.message;
-      } else {
-        window.location.href = "dashboard.html"; // Reindirizza alla pagina della dashboard
-      }
-    }
-  </script>
+    <form onsubmit="event.preventDefault(); login();">
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
 </body>
 </html>
