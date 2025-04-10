@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Piattaforma ESP32</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    th { background-color: #f4f4f4; }
+    button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+  <h2>Dashboard ESP32 - Dati Sensori</h2>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Sensore</th>
+        <th>Valore</th>
+        <th>Data</th>
+        <th>Descrizione</th>
+      </tr>
+    </thead>
+    <tbody id="data-body"></tbody>
+  </table>
+  <button onclick="logout()">Logout</button>
+
+  <script src="https://cdn.supabase.io/supabase-js@1.0.0/dist/supabase.js"></script>
+  <script>
+    const supabaseUrl = 'https://xyzcompany.supabase.co'; // Sostituisci con il tuo URL
+    const supabaseKey = 'public-anon-key'; // Sostituisci con la tua chiave pubblica
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function fetchData() {
+      const { data, error } = await supabase.from('dati').select('*');
+      if (error) {
+        console.error(error);
+      } else {
+        const tableBody = document.getElementById('data-body');
+        data.forEach((row, index) => {
+          tableBody.innerHTML += `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${row.sensore}</td>
+              <td>${row.valore}</td>
+              <td>${row.data}</td>
+              <td>${row.descrizione}</td>
+            </tr>
+          `;
+        });
+      }
+    }
+
+    function logout() {
+      supabase.auth.signOut();
+      window.location.href = "index.html"; // Reindirizza alla pagina di login
+    }
+
+    fetchData(); // Chiamato quando la pagina è caricata
+  </script>
+</body>
+</html>
