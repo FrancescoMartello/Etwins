@@ -75,45 +75,18 @@
 
     </style>
     <script>
-        // Inizializza Supabase con le credenziali del tuo progetto
-        const supabaseUrl = 'https://YOUR-SUPABASE-URL';  // Sostituisci con il tuo URL Supabase
-        const supabaseKey = 'YOUR-SUPABASE-API-KEY';     // Sostituisci con la tua API Key Supabase
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-        // Funzione per gestire il login con email e password
-        async function login() {
-            const email = document.getElementById('email').value;
+        // Funzione di login
+        function login() {
+            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            try {
-                // Esegui il login con email e password
-                const { user, error } = await supabase.auth.signIn({
-                    email: email,
-                    password: password
-                });
-
-                if (error) {
-                    alert(error.message); // Mostra un messaggio di errore
-                } else {
-                    // Se il login ha successo, reindirizza alla dashboard
-                    window.location.href = 'dashboard.html';
-                }
-            } catch (err) {
-                alert('Errore durante il login: ' + err.message);
-            }
-        }
-
-        // Funzione per gestire il login con Google
-        async function loginWithGoogle() {
-            const { user, error } = await supabase.auth.signIn({
-                provider: 'google'
-            });
-
-            if (error) {
-                alert(error.message); // Mostra un messaggio di errore
-            } else {
-                // Se il login con Google ha successo, reindirizza alla dashboard
+            // Verifica se le credenziali sono corrette
+            if (username === "admin" && password === "Ciao123") {
+                // Se le credenziali sono corrette, reindirizza alla pagina dashboard
                 window.location.href = 'dashboard.html';
+            } else {
+                // Se le credenziali non sono corrette, mostra un errore
+                alert("Credenziali errate! Per favore, riprova.");
             }
         }
     </script>
@@ -122,12 +95,6 @@
     <div class="login-container">
         <h2>Login</h2>
         <form onsubmit="event.preventDefault(); login();">
-            <input type="email" id="email" placeholder="Email" required><br><br>
-            <input type="password" id="password" placeholder="Password" required><br><br>
-            <button type="submit">Login</button>
-        </form>
-        <br>
-        <button class="google-button" onclick="loginWithGoogle()">Login with Google</button>
-    </div>
-</body>
-</html>
+            <!-- Usa 'username' e 'password' invece di 'email' e 'password' -->
+            <input type="text" id="username" placeholder="Username" required><br><br>
+            <input type="password" id="password" placeholder="Password"
