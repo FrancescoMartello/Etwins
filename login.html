@@ -6,79 +6,101 @@
     <title>Login Page</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+        /* Global styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .login-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #6e7dff, #4e5cd4);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
-            width: 300px;
         }
 
         .login-container h2 {
-            margin-bottom: 20px;
+            color: #fff;
+            font-size: 30px;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
 
         .login-container input {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 16px;
+            background-color: #fff;
+            transition: 0.3s;
+        }
+
+        .login-container input:focus {
+            border-color: #6e7dff;
+            outline: none;
         }
 
         .login-container button {
-            background-color: #4CAF50;
+            background-color: #6e7dff;
             color: white;
-            padding: 10px 20px;
+            padding: 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
+            font-size: 16px;
+            transition: 0.3s;
         }
 
         .login-container button:hover {
-            background-color: #45a049;
+            background-color: #4e5cd4;
         }
 
-        .google-button {
-            background-color: #db4437;
-            color: white;
-            padding: 10px 20px;
+        .login-container .show-password-button {
+            background-color: transparent;
+            color: #6e7dff;
             border: none;
-            border-radius: 5px;
+            font-size: 14px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        .google-button:hover {
-            background-color: #c1351d;
+        .login-container .show-password-button:hover {
+            color: #4e5cd4;
         }
 
-        .login-container p {
-            margin-top: 10px;
-        }
-
-        /* Stile per l'icona dell'occhio */
-        .eye-icon {
+        .login-container .eye-icon {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
+        }
+
+        /* Media Query for smaller devices */
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px;
+            }
+
+            .login-container h2 {
+                font-size: 24px;
+            }
         }
 
     </style>
@@ -101,16 +123,8 @@
         // Funzione per mostrare/nascondere la password
         function togglePassword() {
             const passwordField = document.getElementById('password');
-            const eyeIcon = document.getElementById('eyeIcon');
-
-            // Controlla se la password è nascosta o visibile
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                eyeIcon.src = "https://img.icons8.com/ios/452/visible.png";  // Cambia l'icona in visibile
-            } else {
-                passwordField.type = "password";
-                eyeIcon.src = "https://img.icons8.com/ios/452/invisible.png";  // Cambia l'icona in invisibile
-            }
+            const currentType = passwordField.type;
+            passwordField.type = currentType === "password" ? "text" : "password";
         }
     </script>
 </head>
@@ -120,11 +134,14 @@
         <form onsubmit="event.preventDefault(); login();">
             <!-- Campo per Username -->
             <input type="text" id="username" placeholder="Username" required><br><br>
-            <!-- Campo per Password con icona dell'occhio -->
+            <!-- Campo per Password -->
             <div style="position: relative;">
                 <input type="password" id="password" placeholder="Password" required><br><br>
+                <!-- Icona occhio per mostrare/nascondere password -->
                 <img id="eyeIcon" class="eye-icon" src="https://img.icons8.com/ios/452/invisible.png" alt="eye icon" onclick="togglePassword()" />
             </div>
+            <!-- Bottone Show Password -->
+            <button type="button" class="show-password-button" onclick="togglePassword()">Show Password</button><br><br>
             <!-- Bottone Login -->
             <button type="submit">Login</button>
         </form>
