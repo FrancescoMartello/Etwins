@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <!-- Include Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.0.0/dist/umd/supabase.min.js"></script>
     <style>
         body {
@@ -95,6 +94,11 @@
     <div class="login-container">
         <h2>Login</h2>
         <form onsubmit="event.preventDefault(); login();">
-            <!-- Usa 'username' e 'password' invece di 'email' e 'password' -->
+            <!-- Cambiato type="email" a type="text" per username -->
             <input type="text" id="username" placeholder="Username" required><br><br>
-            <input type="password" id="password" placeholder="Password"
+            <input type="password" id="password" placeholder="Password" required><br><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
